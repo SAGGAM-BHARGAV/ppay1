@@ -1,0 +1,25 @@
+.scroll-container {
+    background-color: black;
+    color: rgb(50, 145, 235);
+    padding: 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    text-rendering: optimizeLegibility;
+  }
+  
+  .scroll-text {
+    display: inline-block;
+    padding-left: 100%; /* Start from outside the right edge */
+    animation: scroll 100s linear infinite;
+    text-rendering: optimizeLegibility; /* Adjust duration as needed */
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(40%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
