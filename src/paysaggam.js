@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Userstate from './userstate.js';
-import { useNavigate } from 'react-router-dom'; // Adjust the import path as necessary
 
-const UserForm = () => {
+const PaySaggam = () => {
   const [Textarea, setTextarea] = useState('');
   const [Mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +11,9 @@ const UserForm = () => {
   const [editMode, setEditMode] = useState(false);
   const [editUserId, setEditUserId] = useState(null);
   const [duration, setDuration] = useState('');
-  const navigate = useNavigate();
+  const [previewData, setPreviewData] = useState(null);
+  const [setSearchResult] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   const {
     states,
@@ -154,16 +155,48 @@ const UserForm = () => {
     setEditUserId(userdata.ID);
     setTextarea(userdata.Textarea);
     setMobile(userdata.Mobile);
-    setPassword(''); // Clear the password input
+    setPassword('');
+    setPosts([]); // Clear the password input
   };
 
   const handleDelete = async (userId) => {
     try {
       await axios.delete(`http://localhost:8084/userdata/${userId}`);
       fetchUsers();
+      setPosts([]);
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handlePreview = () => {
+    if (!Textarea || !Mobile || !state || !district || !category) {
+      alert('Please fill in all fields to preview');
+      return;
+    }
+    setPreviewData({
+      Textarea,
+      Mobile,
+      State: state,
+      District: district,
+      Category: category,
+    });
+    setPosts(null);
+  };
+
+  const fetchPosts = async (searchParams) => {
+    try {
+      const response = await axios.get('http://localhost:8084/search', { params: searchParams });
+      setPosts(filterNullValues(response.data));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleSearch = () => {
+    const searchParams = { Mobile: Mobile, password: password };
+    fetchPosts(searchParams);
+    setPreviewData(null);
   };
 
   const resetForm = () => {
@@ -176,25 +209,22 @@ const UserForm = () => {
     setDuration('');
     setEditMode(false);
     setEditUserId(null);
+    setSearchResult(null);
   };
 
   const handleImageDelete = async (userId) => {
     try {
       await axios.delete(`http://localhost:8084/userdata/${userId}`);
       fetchUsers();
+      setPosts([]);
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <div>
-    <button
-        className="btn btn-primary mt-2 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-        onClick={() => navigate('/')}
-      >
-        Home
-      </button>
+    <div className="edit-form">
+      <div className="left-container">
       <h2>User Details Form</h2>
       <form onSubmit={handleTextMobileSubmit}>
       <label htmlFor="Textarea">Textarea: </label>
@@ -260,11 +290,53 @@ const UserForm = () => {
               <option value={15552000}>6 months</option>
               <option value={31536000}>12 months</option> required
             </select>
+            <button type="button" onClick={handlePreview}>Preview</button>
           </>
         )}
         <button type="submit">{editMode ? 'Update' : `Pay $${durationPrices[duration] || 0}`}</button>
       </form>
-  
+      </div>
+
+      <div className="middle-container">
+      <h2>Posted Details</h2>
+      {previewData && !posts && (
+          <div>
+            <p>{previewData.Textarea}</p>
+            <p>{previewData.Mobile}</p>
+            <p>{previewData.State}</p>
+            <p>{previewData.District}</p>
+            <p>{previewData.Category}</p>
+          </div>
+        )} 
+        {!previewData && posts && (
+        <div >
+          {posts.map((post) => (
+            <div key={post.ID}>
+            {post.Image && post.Mobile ? (
+            <>
+              <img
+                src={`http://localhost:8084/uploads/${post.Image}`}
+                alt=""
+                width="150px"
+                height="200px"
+              /> <br />
+              <button onClick={() => handleImageDelete(post.ID)}>Delete Image</button>
+            </>
+          ) : (
+            <>
+              <p>{post.Textarea}</p>
+              <p>{post.Mobile}</p>
+              <button onClick={() => handleEdit(post)}>Edit</button>
+              <button onClick={() => handleDelete(post.ID)}>Delete</button>
+            </>
+          )}
+          </div>
+          ))}
+          </div>  
+        )}
+      </div>
+
+      <div className="right-container">
       <h3>Image Upload</h3>
       <form onSubmit={handleImageUpload}>
         <input
@@ -324,36 +396,33 @@ const UserForm = () => {
         )}
         <button type="submit">Pay ${durationPrices[duration] || 0}</button>
       </form>
-  
-      <h2>Posted Details</h2>
-      {userdata.map((user) => (
-      <div key={user.ID}>
-        {user.Image && user.Mobile ? (
-          <>
-            <img
-              src={`http://localhost:8084/uploads/${user.Image}`}
-              alt=""
-              width="150px"
-              height="200px"
-            />  <br />
-            <button onClick={() => handleImageDelete(user.ID)}>Delete Image</button>
-          </>
-        ) : (
-          <>
-            <p>{user.Textarea}</p>
-            <p>{user.Mobile}</p>
-            <button onClick={() => handleEdit(user)}>Edit</button>
-            <button onClick={() => handleDelete(user.ID)}>Delete</button>
-          </>
-        )}
+      <div className="search-container">
+        <h3>Search User</h3>
+        <div >
+             <div >
+              <label>Mobile Number</label>
+              <input type="text" value={Mobile} onChange={(e) => setMobile(e.target.value)} className="form-control" />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" />
+            </div>
+            <button className="btn btn-primary mt-2" onClick={() => {
+      if (!Mobile || !password) {
+        alert('Both Mobile and Password are required');
+        return;
+      }
+      handleSearch();
+    }}>Search</button>
+          </div>
+          
       </div>
-    ))}
+      </div>
     </div>
   );
-  
 };
 
-export default UserForm;
+export default PaySaggam;
 
 
 

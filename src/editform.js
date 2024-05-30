@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Userstate from './userstate.js';
 import { useNavigate } from 'react-router-dom';
+import './EditForm.css';
 
 const EditForm = () => {
   const [Textarea, setTextarea] = useState('');
@@ -36,9 +37,7 @@ const EditForm = () => {
   } = Userstate();
 
   const durationPrices = {
-    '30': 39,
-    '90': 51,
-    '2592000': 5,
+    '2592000': 99,
     '5184000': 179,
     '15552000': 549,
     '31536000': 999,
@@ -145,6 +144,7 @@ const EditForm = () => {
             headers: { 'Content-Type': 'multipart/form-data' }
           });
           alert(`Payment Successful! Transaction ID: ${response.razorpay_payment_id}`);
+          alert("your ad was created");
           fetchUsers();
           resetForm();
         } catch (err) {
@@ -316,21 +316,42 @@ const EditForm = () => {
   return (
     
     <div className="edit-form">
+    <div className="header-container fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">
+            <img src="https://i.ibb.co/9cVnhNw/Pngtree-3d-rendering-announcement-icon-8918401.png" width="70" height="50" class="d-inline-block align-top" alt="" />
+            nearby<span class="com">.com</span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link active " onClick={() => navigate('/')}>Home </a>
+              <a class="nav-item nav-link" href="#">Careers</a>
+              <a class="nav-item nav-link" href="#">About Us</a>
+              <a class="nav-item nav-link disabled" href="#">Connect with Us</a>
+            </div>
+          </div>
+        </nav>
+      </div>
     <div className="scroll-container">
         <p className="scroll-text">"The announcements will be displayed in the same language in which you enter and post them." & "మీరు మీ ప్రకటనలను ఎలాంటి భాషలో నమోదు చేసి పోస్ట్ చేస్తారో, అదే భాషలో అవి ప్రదర్శించబడతాయి." & "आप जिस भाषा में अपनी घोषणाएँ दर्ज और पोस्ट करेंगे, उसी भाषा में वे प्रदर्शित की जाएँगी।" </p>
       </div>
+
       <div className="left-container">
+      <div>
       <button
         className="btn btn-primary mt-2 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
         onClick={() => navigate('/')}
       >
         Home
       </button>
-        <h2>User Details Form</h2>
+        <h2 className="hh">Create Your Ad</h2>
         <form onSubmit={handleTextMobileSubmit}>
           {!isImageMode && (
-            <>
-              <label htmlFor="Textarea">Textarea: </label>
+            <div className="form-group">
+              <label htmlFor="Textarea"  >Textarea: </label>
               <textarea
                 type="text"
                 id="Textarea"
@@ -338,8 +359,9 @@ const EditForm = () => {
                 value={Textarea}
                 onChange={(e) => setTextarea(e.target.value)}
               />
-            </>
+            </div>
           )}
+          <div className="form-group">
           <label htmlFor="Mobile">Mobile: </label>
           <input
             type="text"
@@ -349,6 +371,8 @@ const EditForm = () => {
             onChange={(e) => setMobile(e.target.value)}
             placeholder="Enter mobile number"
           />
+          </div>
+<div className="form-group">
           <label htmlFor="password">Password: </label>
           <input
             type="text"
@@ -359,8 +383,10 @@ const EditForm = () => {
             placeholder="Create your 6 digit password"
             required
           />
+          </div>
           {!editMode && !isImageMode && (
             <>
+            <div className="form-group">
               <select value={state} onChange={handleStateChange}>
                 <option value="">Select State</option>
                 {states.map((option) => (
@@ -369,6 +395,8 @@ const EditForm = () => {
                   </option>
                 ))}
               </select>
+</div>
+              <div className="form-group">
               <select value={district} onChange={handleDistrictChange}>
                 <option value="">Select District</option>
                 {states
@@ -378,6 +406,8 @@ const EditForm = () => {
                     </option>
                   ))}
               </select>
+</div>
+              <div className="form-group">
               <select value={category} onChange={handleCategoryChange}>
                 <option value="">Select Category</option>
                 {categories.map((option) => (
@@ -386,33 +416,35 @@ const EditForm = () => {
                   </option>
                 ))}
               </select>
+              </div>
+              <div className="form-group">
               <select value={duration} onChange={(e) => setDuration(parseInt(e.target.value))}>
-                <option value="">Select Duration</option>
-                <option value={30}>30 seconds</option>
-                <option value={90}>90 seconds</option>
+                <option value="">Select Duration</option> 
                 <option value={2592000}>1 month</option>
                 <option value={5184000}>2 months</option>
                 <option value={15552000}>6 months</option>
                 <option value={31536000}>12 months</option>
               </select>
-              <button type="button" onClick={handlePreview}>Preview</button>
+              </div>
+              <button type="button"  className="form-group btn btn-primary mt-1" onClick={handlePreview}>Preview</button>
             </>
           )}
-          <button type="submit">
+          <button type="submit" className="form-group btn btn-primary mt-1">
             {editMode ? 'Update' : `Pay $${durationPrices[duration] || 0}`}
           </button>
         </form>
       </div>
-
-      <div className="middle-container">
-        <h2>Posted Details</h2>
+</div>
+          <div className="main-content">  
+      <div className="middle-container text-center">
+        <h2 className="label">Ad Details</h2>
         {previewData && !posts && isTextMode && (
           <div>
-            <p>{previewData.Textarea}</p>
-            <p>{previewData.Mobile}</p>
-            <p>{previewData.State}</p>
-            <p>{previewData.District}</p>
-            <p>{previewData.Category}</p>
+            <p><span className="label">Ad:</span>{previewData.Textarea}</p>
+            <p><span className="label">Phone:</span>{previewData.Mobile}</p>
+            <p><span className="label">State:</span>{previewData.State}</p>
+            <p><span className="label">District:</span>{previewData.District}</p>
+            <p><span className="label">Category:</span>{previewData.Category}</p>
           </div>
         )}
         {!previewData && posts && (
@@ -428,14 +460,14 @@ const EditForm = () => {
                       height="200px"
                     />
                     <br />
-                    <button onClick={() => handleImageDelete(post.ID)}>Delete Image</button>
+                    <button className="form-group btn btn-primary" onClick={() => handleImageDelete(post.ID)}>Delete Image</button>
                   </>
                 ) : (
                   <>
-                    <p>{post.Textarea}</p>
-                    <p>{post.Mobile}</p>
-                    <button onClick={() => handleEdit(post)}>Edit</button>
-                    <button onClick={() => handleDelete(post.ID)}>Delete</button>
+                    <p><span className="label">Ad:</span>{post.Textarea}</p>
+                    <p><span className="label">Phone:</span>{post.Mobile}</p>
+                    <button className="form-group btn btn-primary" onClick={() => handleEdit(post)}>Edit</button>
+                    <button className="form-group btn btn-primary" onClick={() => handleDelete(post.ID)}>Delete</button>
                   </>
                 )}
               </div>
@@ -443,22 +475,28 @@ const EditForm = () => {
           </div>
         )}
       </div>
-
+</div>
       <div className="right-container">
-        <h3>Image Upload</h3>
+        <h3 className="hh">Image Upload</h3>
+
         <form onSubmit={handleImageUpload}>
           {!isTextMode && (
+            <div className="form-group">
             <input
               type="file"
               onChange={(e) => setImage(e.target.files[0])}
             />
+            </div>
           )}
+          <div className="form-group">
           <input
             type="text"
             value={Mobile}
             onChange={(e) => setMobile(e.target.value)}
             placeholder="Enter mobile number"
           />
+          </div>
+<div className="form-group">
           <input
             type="text"
             value={password}
@@ -466,8 +504,10 @@ const EditForm = () => {
             placeholder="Create your 6 digit password"
             required
           />
+          </div>
           {!editMode && !isTextMode && (
             <>
+            <div className="form-group">
               <select value={state} onChange={handleStateChange}>
                 <option value="">Select State</option>
                 {states.map((option) => (
@@ -476,6 +516,8 @@ const EditForm = () => {
                   </option>
                 ))}
               </select>
+</div>
+              <div className="form-group">
               <select value={district} onChange={handleDistrictChange}>
                 <option value="">Select District</option>
                 {states
@@ -485,6 +527,8 @@ const EditForm = () => {
                     </option>
                   ))}
               </select>
+</div>
+              <div className="form-group">
               <select value={category} onChange={handleCategoryChange}>
                 <option value="">Select Category</option>
                 {categories.map((option) => (
@@ -493,25 +537,26 @@ const EditForm = () => {
                   </option>
                 ))}
               </select>
+</div>
+              <div className="form-group">
               <select value={duration} onChange={(e) => setDuration(parseInt(e.target.value))}>
-                <option value="">Select Duration</option>
-                <option value={30}>30 seconds</option>
-                <option value={90}>90 seconds</option>
+                <option value="">Select Duration</option> 
                 <option value={2592000}>1 month</option>
                 <option value={5184000}>2 months</option>
                 <option value={15552000}>6 months</option>
                 <option value={31536000}>12 months</option>
               </select>
+              </div>
             </>
           )}
-          <button type="submit">
+          <button type="submit" className="form-group btn btn-primary mt-2">
             Pay ${durationPrices[duration] || 0}
           </button>
         </form>
-        <div className="search-container">
-          <h3>Search User</h3>
+        <div className="">
+          <h3 className="hh">Edit & Delete Your Ad</h3>
           <div>
-            <div>
+            <div className="form-group">
               <label>Mobile Number</label>
               <input
                 type="text"
@@ -544,6 +589,10 @@ const EditForm = () => {
           </div>
         </div>
       </div>
+      <div className="down-container text-center fixed-bottom mt-4">
+        <p>Follow us on</p>
+        <p>Email: nearbyteam4@gmail.com</p>
+        </div>
     </div>
   );
 };
