@@ -1,0 +1,139 @@
+.about-us-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+  }
+  
+  .about-us-container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .about-us-container p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .about-us-container a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .about-us-container a:hover {
+    text-decoration: underline;
+  }
+  
+  .contact-us-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+  }
+  
+  .contact-us-container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .contact-us-container p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .contact-us-container a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .contact-us-container a:hover {
+    text-decoration: underline;
+  }
+  
+  .privacy-policy-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+  }
+  
+  .privacy-policy-container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .privacy-policy-container p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .privacy-policy-container a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .privacy-policy-container a:hover {
+    text-decoration: underline;
+  }
+  
+  .terms-and-conditions-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+  }
+  
+  .terms-and-conditions-container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .terms-and-conditions-container p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .terms-and-conditions-container a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .terms-and-conditions-container a:hover {
+    text-decoration: underline;
+  }
+  
+  .cancellation-refund-policies-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+  }
+  
+  .cancellation-refund-policies-container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .cancellation-refund-policies-container p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .hh{
+    margin-top: 160px;
+    margin-bottom: 130px;
+  }
+
+  .cancellation-refund-policies-container a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .cancellation-refund-policies-container a:hover {
+    text-decoration: underline;
+  }
