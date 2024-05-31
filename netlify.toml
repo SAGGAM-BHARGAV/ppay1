@@ -1,3 +1,14 @@
 [build]
-  command = "npm run build"
-  publish = "build"
+  command = "npm run build --prefix vbn"
+  publish = "vbn/build"
+
+[build.environment]
+  NODE_VERSION = "14"
+
+[context.production.environment]
+  NODE_ENV = "production"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
