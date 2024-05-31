@@ -66,7 +66,7 @@
     position: fixed;
     left: 0;
     height: calc(100% - 145px); /* Adjust based on the header's height */
-    width: 250px;
+    width: 300px;
     z-index: 900;
     overflow: auto;
     padding-bottom: 250px;

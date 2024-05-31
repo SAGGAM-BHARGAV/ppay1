@@ -1,5 +1,5 @@
 /* config-overrides.js */
-module.exports = function override(config) {
+/*module.exports = function override(config) {
     config.resolve.fallback = {
       buffer: require.resolve('buffer/'),
       crypto: require.resolve('crypto-browserify'),
@@ -11,4 +11,4 @@ module.exports = function override(config) {
     };
   
     return config;
-  }
+  }*/
