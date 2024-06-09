@@ -17,7 +17,7 @@ const EditForm = () => {
   const [setSearchResult] = useState(null);
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
-  const [formatter] = useState(new Intl.NumberFormat('en-US', {
+  const [] = useState(new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'INR',
     minimumFractionDigits: 0,

@@ -10,7 +10,7 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isButtonVisible, setIsButtonVisible] = useState(false);
-  const [validCodes, setValidCodes] = useState(['Ppay@1212', 'Lakshana@Bhargav']);
+  const [validCodes] = useState(['Ppay@1212', 'Lakshana@Bhargav']);
   const navigate = useNavigate();
   const [showContent, setShowContent] = useState(null);
 
@@ -66,15 +66,7 @@ const Home = () => {
       alert('Invalid code. Please try again.');
     }
   };
-
-  const addValidCode = (newCode) => {
-    setValidCodes([...validCodes, newCode]);
-  };
-
-  const removeValidCode = (codeToRemove) => {
-    setValidCodes(validCodes.filter(code => code !== codeToRemove));
-  };
-  
+ 
   const handleContentClick = (content) => {
     setShowContent(content);
   };
@@ -101,7 +93,7 @@ const Home = () => {
   };
 
   const ContactUsContent = () => {
-    const navigateHome = useNavigate();
+    
 
     const handleHomeClick = () => {
       setShowContent(null);
@@ -122,7 +114,7 @@ const Home = () => {
   };
 
   const PrivacyPolicyContent = () => {
-    const navigateHome = useNavigate();
+   
 
     const handleHomeClick = () => {
       setShowContent(null);
@@ -147,7 +139,7 @@ const Home = () => {
   };
 
   const TermsAndConditionsContent = () => {
-    const navigateHome = useNavigate();
+   
 
     const handleHomeClick = () => {
       setShowContent(null);
@@ -329,7 +321,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
-
