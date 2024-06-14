@@ -69,6 +69,7 @@ const Home = () => {
  
   const handleContentClick = (content) => {
     setShowContent(content);
+    window.history.pushState(null, '', `#${content}`);
   };
 
   const AboutUsContent = () => {
