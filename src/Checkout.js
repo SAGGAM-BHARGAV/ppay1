@@ -8,7 +8,7 @@ function Checkout() {
   let insitialzeSDK = async function () {
 
     cashfree = await load({
-      mode: "sandbox",
+      mode: "production",
     })
   }
 
