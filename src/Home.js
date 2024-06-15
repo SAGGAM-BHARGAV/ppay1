@@ -168,6 +168,7 @@ const Home = () => {
     setShowContent(null);
     navigateHome('/');
   };
+
   const CancellationRefundPoliciesContent = () => {
     const navigateHome = useNavigate();
 
@@ -254,6 +255,7 @@ const Home = () => {
             </div>
             <button className="btn btn-primary nav-item bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" onClick={handleSearch}>Search</button> <br/>
             <button className="btn btn-secondary  bg-gray-500 text-white py-2 mt-1 px-1 rounded-md hover:bg-gray-600" onClick={() => navigate('/create-post')}>Create&Edit Post</button>
+            <button onClick={() => navigate('/Checkout')}>hhh</button>
           </div>
 
           <div className="main-content">
