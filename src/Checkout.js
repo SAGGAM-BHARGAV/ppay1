@@ -20,7 +20,7 @@ function Checkout() {
 
   const getSessionId = async () => {
     try {
-      let res = await axios.get("http://localhost:3000/payment")
+      let res = await axios.get("http://cashf-9ed38ab76a7b.herokuapp.com///payment")
       
       if(res.data && res.data.payment_session_id){
 
@@ -38,7 +38,7 @@ function Checkout() {
   const verifyPayment = async () => {
     try {
       
-      let res = await axios.post("http://localhost:3000/verify", {
+      let res = await axios.post("http://cashf-9ed38ab76a7b.herokuapp.com///verify", {
         orderId: orderId
       })
 
