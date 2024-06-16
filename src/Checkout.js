@@ -20,7 +20,7 @@ function Checkout() {
 
   const getSessionId = async () => {
     try {
-      let res = await axios.get("http://cashf-9ed38ab76a7b.herokuapp.com///payment")
+      let res = await axios.get("https://cashf-9ed38ab76a7b.herokuapp.com/payment")
       
       if(res.data && res.data.payment_session_id){
 
@@ -38,7 +38,7 @@ function Checkout() {
   const verifyPayment = async () => {
     try {
       
-      let res = await axios.post("http://cashf-9ed38ab76a7b.herokuapp.com///verify", {
+      let res = await axios.post("https://cashf-9ed38ab76a7b.herokuapp.com/verify", {
         orderId: orderId
       })
 
@@ -78,7 +78,7 @@ function Checkout() {
 
       <h1>Cashfree payment getway</h1>
       <div className="card">
-        <button onClick={handleClick}>
+        <button className="btn btn-primary" onClick={handleClick}>
           Pay now
         </button>
 
