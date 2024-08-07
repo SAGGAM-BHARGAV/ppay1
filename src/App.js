@@ -4,15 +4,14 @@ import Home from './Home.js';
 import PaySaggam from './paysaggam.js';
 import EditForm from './editform.js'; 
 import Checkout from './Checkout.js';
-//import Server from './server.js';
 
 const App = () => {
   return (
     <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="/create-post" element={<EditForm />} />
+    <Route path="/createpost" element={<EditForm />} />
     <Route path="/PaySaggam" element={<PaySaggam />} />
-    <Route path="/Checkout" element={<Checkout />} />
+    <Route path="/create" element={<Checkout />} />
     </Routes>
   );
 };

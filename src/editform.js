@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Userstate from './userstate.js'; 
+import Userstate from './userstate.js';
+import {load} from '@cashfreepayments/cashfree-js'; 
 import './EditForm.css';
 
 const EditForm = () => {
@@ -24,7 +25,7 @@ const EditForm = () => {
   }));
   const [isTextMode, setIsTextMode] = useState(false); // New state to track text mode
   const [isImageMode, setIsImageMode] = useState(false);
-
+   
   const {
     states,
     state,
@@ -79,7 +80,7 @@ const EditForm = () => {
     });
   };
 
-  const loadScript = (src) => {
+ const loadScript = (src) => {
     return new Promise((resolve) => {
       const script = document.createElement('script');
       script.src = src;
@@ -95,8 +96,46 @@ const EditForm = () => {
       document.body.appendChild(script);
     });
   };
+  
+  let cashfree;
 
-  const displayRazorpay = async (amount, isImageUpload) => {
+const insitialzeSDK = async () => {
+  cashfree = await load({
+    mode: "sandbox",
+  });
+};
+insitialzeSDK()
+const [orderId, setOrderId] = useState('');
+
+  const getSessionId = async () => {
+    try {
+      let res = await axios.get("http://localhost:8000/payment");
+
+      if (res.data && res.data.payment_session_id) {
+        console.log(res.data);
+        setOrderId(res.data.order_id);
+        return res.data.payment_session_id;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const verifyPayment = async () => {
+    try {
+      let res = await axios.post("http://localhost:8000/verify", {
+        orderId: orderId
+      });
+
+      if (res && res.data) {
+        alert("Payment verified");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  /*const displayRazorpay = async (amount, isImageUpload) => {
     if (!Mobile || !password) {
       alert('Please fill in Mobile, and Password');
       return;
@@ -158,6 +197,61 @@ const EditForm = () => {
   
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
+  };  */
+  const displayCashfree = async (isImageUpload) => {
+    if (!Mobile || !password) {
+      alert('Please fill in Mobile, and Password');
+      return;
+    }
+    if (Mobile.length !== 10) {
+      alert('Mobile number must be exactly 10 digits');
+      return;
+    }
+    if (password.length !== 6) {
+      alert('Password must be exactly 6 digits');
+      return;
+    }
+
+    let sessionId = await getSessionId();
+    let checkoutOptions = {
+      paymentSessionId: sessionId,
+      redirectTarget: "_modal",
+    };
+
+    cashfree.checkout(checkoutOptions).then(async (res) => {
+      console.log("Payment initialized");
+
+      await verifyPayment(orderId);
+      handlePaymentSuccess(isImageUpload);
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+
+  const handlePaymentSuccess = async (isImageUpload) => {
+    const formData = new FormData();
+    formData.append('Textarea', Textarea);
+    if (isImageUpload && image) {
+      formData.append('image', image);
+    }
+    formData.append('Mobile', Mobile);
+    formData.append('password', password);
+    formData.append('State', state);
+    formData.append('District', district);
+    formData.append('Category', category);
+    formData.append('duration', duration * 1000);
+    formData.append('createdAt', new Date());
+
+    try {
+      await axios.post('http://localhost:8084/userdata', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      alert("Payment Successful! Your ad was created.");
+      fetchUsers();
+      resetForm();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleTextMobileSubmit = async (e) => {
@@ -176,7 +270,6 @@ const EditForm = () => {
     formData.append('Category', category);
     formData.append('duration', duration * 1000); // Convert duration to milliseconds
     
-
     setIsTextMode(true); 
     setIsImageMode(false);
     if (editMode) {
@@ -191,9 +284,8 @@ const EditForm = () => {
           console.error(err);
         }
       } else {
-        displayRazorpay(durationPrices[duration], formData, false);
+        displayCashfree(false);
       }
-    
   };
 
   const handleImageUpload = async (e) => {
@@ -231,7 +323,7 @@ const EditForm = () => {
           console.error(err);
         }
       } else {
-        displayRazorpay(durationPrices[duration], formData, true);
+        displayCashfree(true);
       }
   };
 
@@ -314,7 +406,6 @@ const EditForm = () => {
   };
 
   return (
-    
     <div className="edit-form">
     <div className="header-container fixed-top">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -335,10 +426,9 @@ const EditForm = () => {
           </div>
         </nav>
       </div>
-    <div className="scroll-container">
+          <div className="scroll-container">
         <p className="scroll-text">"The announcements will be displayed in the same language in which you enter and post them." & "మీరు మీ ప్రకటనలను ఎలాంటి భాషలో నమోదు చేసి పోస్ట్ చేస్తారో, అదే భాషలో అవి ప్రదర్శించబడతాయి." & "आप जिस भाषा में अपनी घोषणाएँ दर्ज और पोस्ट करेंगे, उसी भाषा में वे प्रदर्शित की जाएँगी।" </p>
       </div>
-
       <div className="left-container">
       <div>
       <button
@@ -351,7 +441,7 @@ const EditForm = () => {
         <form onSubmit={handleTextMobileSubmit}>
           {!isImageMode && (
             <div className="form-group">
-              <label htmlFor="Textarea"  >Textarea: </label>
+              <label htmlFor="Textarea">Textarea: </label>
               <textarea
                 type="text"
                 id="Textarea"
@@ -395,7 +485,7 @@ const EditForm = () => {
                   </option>
                 ))}
               </select>
-</div>
+            </div>
               <div className="form-group">
               <select value={district} onChange={handleDistrictChange}>
                 <option value="">Select District</option>
@@ -406,7 +496,7 @@ const EditForm = () => {
                     </option>
                   ))}
               </select>
-</div>
+             </div>
               <div className="form-group">
               <select value={category} onChange={handleCategoryChange}>
                 <option value="">Select Category</option>
@@ -434,7 +524,7 @@ const EditForm = () => {
           </button>
         </form>
       </div>
-</div>
+     </div>
           <div className="main-content">  
       <div className="middle-container text-center">
         <h2 className="label">Ad Details</h2>
@@ -463,7 +553,7 @@ const EditForm = () => {
                     <button className="form-group btn btn-primary" onClick={() => handleImageDelete(post.ID)}>Delete Image</button>
                   </>
                 ) : (
-                  <>
+                <>
                     <p><span className="label">Ad:</span>{post.Textarea}</p>
                     <p><span className="label">Phone:</span>{post.Mobile}</p>
                     <button className="form-group btn btn-primary" onClick={() => handleEdit(post)}>Edit</button>
@@ -475,10 +565,9 @@ const EditForm = () => {
           </div>
         )}
       </div>
-</div>
+     </div>
       <div className="right-container">
         <h3 className="hh">Image Upload</h3>
-
         <form onSubmit={handleImageUpload}>
           {!isTextMode && (
             <div className="form-group">
@@ -496,7 +585,7 @@ const EditForm = () => {
             placeholder="Enter mobile number"
           />
           </div>
-<div className="form-group">
+         <div className="form-group">
           <input
             type="text"
             value={password}
@@ -516,7 +605,7 @@ const EditForm = () => {
                   </option>
                 ))}
               </select>
-</div>
+           </div>
               <div className="form-group">
               <select value={district} onChange={handleDistrictChange}>
                 <option value="">Select District</option>
@@ -527,7 +616,7 @@ const EditForm = () => {
                     </option>
                   ))}
               </select>
-</div>
+             </div>
               <div className="form-group">
               <select value={category} onChange={handleCategoryChange}>
                 <option value="">Select Category</option>
@@ -537,7 +626,7 @@ const EditForm = () => {
                   </option>
                 ))}
               </select>
-</div>
+             </div>
               <div className="form-group">
               <select value={duration} onChange={(e) => setDuration(parseInt(e.target.value))}>
                 <option value="">Select Duration</option> 

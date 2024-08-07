@@ -1,5 +1,5 @@
-/*import React, { useState, useEffect } from 'react';
-import axios from 'axios'; 
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useUserState from './userstate.js';
 import './Home.css';
@@ -84,7 +84,7 @@ const Home = () => {
       <div className="about-us-container hh">
         <h2>About Us</h2>
         <p>
-          Welcome to Nearby, your go-to platform for local ads. Whether you're looking for a job, trying to sell something, or searching for real estate opportunities, Nearby connects you with people and businesses in your area. Our mission is to make it easy for you to find what you need, right where you are. We believe in the power of community and the convenience of local connections. That's why we designed Nearby to be user-friendly, secure, and effective for all your advertising needs. Join us and start exploring what's nearby today!
+        Welcome to Nearby, your go-to platform for local ads. Whether you're looking for a job, trying to sell something, or searching for real estate opportunities, Nearby connects you with people and businesses in your area. Our mission is to make it easy for you to find what you need, right where you are. We believe in the power of community and the convenience of local connections. That's why we designed Nearby to be user-friendly and effective for all your advertising needs. Please note that this Nearby website is not responsible for the content of the posted ads. We encourage users to thoroughly verify and proceed with caution. Join us and start exploring what's nearby today!
         </p>
         <a href="#" onClick={handleHomeClick}>
           Home
@@ -126,10 +126,9 @@ const Home = () => {
       <div className="privacy-policy-container hh">
         <h2>Privacy Policy</h2>
         <p>Your privacy is important to us at Nearby. We are committed to protecting the personal information you share with us. This policy outlines how we collect, use, and safeguard your data.</p>
-        <p>Information Collection: We collect information that you provide when you register, post ads, and interact with our site. This includes your name, contact details, and ad content.</p>
+        <p>Information Collection: We collect information that you provide when you register, post ads, and interact with our site. This includes only your mobile number, and ad content.</p>
         <p>Use of Information: The information we collect is used to provide and improve our services, process transactions, and communicate with you.</p>
-        <p>Data Security: We implement various security measures to ensure your personal information is protected.</p>
-        <p>Third-Party Disclosure: We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties without your consent, except as required by law.</p>
+       <p>Third-Party Disclosure: We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties without your consent, except as required by law.</p>
         <p>Cookies: We use cookies to enhance your experience on our site. You can choose to disable cookies through your browser settings.</p>
         <p>By using our site, you consent to our privacy policy.</p>
         <a href="#" onClick={handleHomeClick}>
@@ -254,9 +253,8 @@ const Home = () => {
               </select>
             </div>
             <button className="btn btn-primary nav-item bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" onClick={handleSearch}>Search</button> <br/>
-            <button className="btn btn-secondary  bg-gray-500 text-white py-2 mt-1 px-1 rounded-md hover:bg-gray-600" onClick={() => navigate('/create-post')}>Create&Edit Post</button>
-            <button onClick={() => navigate('/Checkout')}>hhh</button>
-          </div>
+            <button className="btn btn-secondary  bg-gray-500 text-white py-2 mt-1 px-1 rounded-md hover:bg-gray-600" onClick={() => navigate('/createpost')}>Create&Edit Post</button>
+            </div>
 
           <div className="main-content">
           <div className="col-md-6 posts-container">
@@ -276,22 +274,18 @@ const Home = () => {
                     width="150px"
                     height="200px"
                   />
-                 
                 </div>
               )
             )}
           </div>
-          </div>
-          
-          
+          </div> 
           <div className="col-md-3 note-container fixed-right">
-          
             <h1>Note</h1>
-            <p className="note-text">"Before responding to announcements from Nearby, we emphasize the importance of carefully verifying and not trusting fraudulent announcements."
-</p>   <br/>
-            <p className="note-text">"Nearby ద్వారా వెలువడే ప్రకటనలకు ప్రతిస్పందించే ముందు, తగిన విధంగా పరిశీలించి, మోసపూరిత ప్రకటనలను నమ్మవద్దని తెలుపుతున్నాము."
-</p><br/>
-            <p className="note-text">"Nearby द्वारा की गई घोषणाओं पर प्रतिक्रिया देने से पहले, हम यह बताना चाहते हैं कि सही तरीके से जांच करें और धोखाधड़ीपूर्ण घोषणाओं पर विश्वास न करें।</p>
+            <p className="note-text">"Before responding to announcements from Nearby, we emphasize the importance of carefully verifying and not trusting fraudulent announcements. this Nearby website is not responsible for the content of the posted ads."
+</p>   
+            <p className="note-text">"Nearby ద్వారా వెలువడే ప్రకటనలకు ప్రతిస్పందించే ముందు, తగిన విధంగా పరిశీలించి, మోసపూరిత ప్రకటనలను నమ్మవద్దని తెలుపుతున్నాము. ఈ Nearby వెబ్‌సైట్ పోస్ట్ చేయబడిన ప్రకటనల కంటెంట్‌కు బాధ్యత వహించదు."
+</p>
+            <p className="note-text">"Nearby द्वारा की गई घोषणाओं पर प्रतिक्रिया देने से पहले, हम यह बताना चाहते हैं कि सही तरीके से जांच करें और धोखाधड़ीपूर्ण घोषणाओं पर विश्वास न करें। यह Nearby वेबसाइट पोस्ट की गई विज्ञापनों की सामग्री के लिए ज़िम्मेदार नहीं है।</p>
           </div>
           </div>
         )}
@@ -320,100 +314,7 @@ const Home = () => {
       </div>
     </div>
   );
-  
+
 };
 
 export default Home;
-*/
-
-import { useState } from 'react'
-import axios from "axios"
-import {load} from '@cashfreepayments/cashfree-js'
-
-function Checkout() {
-    let cashfree;
-
-  let insitialzeSDK = async function () {
-
-    cashfree = await load({
-      mode: "production",
-    })
-  }
-
-  insitialzeSDK()
-
-  const [orderId, setOrderId] = useState("")
-
-
-
-  const getSessionId = async () => {
-    try {
-      let res = await axios.get("https://cashf-9ed38ab76a7b.herokuapp.com/payment")
-      
-      if(res.data && res.data.payment_session_id){
-
-        console.log(res.data)
-        setOrderId(res.data.order_id)
-        return res.data.payment_session_id
-      }
-
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const verifyPayment = async () => {
-    try {
-      
-      let res = await axios.post("https://cashf-9ed38ab76a7b.herokuapp.com/verify", {
-        orderId: orderId
-      })
-
-      if(res && res.data){
-        alert("payment verified")
-      }
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const handleClick = async (e) => {
-    e.preventDefault()
-    try {
-
-      let sessionId = await getSessionId()
-      let checkoutOptions = {
-        paymentSessionId : sessionId,
-        redirectTarget:"_modal",
-      }
-
-      cashfree.checkout(checkoutOptions).then((res) => {
-        console.log("payment initialized")
-
-        verifyPayment(orderId)
-      })
-
-
-    } catch (error) {
-      console.log(error)
-    }
-
-  }
-  return (
-    <>
-
-      <h1>Cashfree payment getway</h1>
-      <div className="card">
-        <button className="btn btn-primary" onClick={handleClick}>
-          Pay now
-        </button>
-
-      </div>
-
-    </>
-  )
-}
-export default Checkout;
-

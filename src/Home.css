@@ -1,4 +1,4 @@
-/* General Styles */
+
 body {
   font-family: 'Arial', sans-serif;
   background-color: #fdfdfd;
@@ -7,9 +7,8 @@ body {
   padding: 0;
 }
 
-/* Header */
 .header-container {
-  background-color: #007bff;
+  background-color: #0038ee;
   color: white;
   padding: 1rem;
   position: fixed;
@@ -30,10 +29,9 @@ body {
   margin-left: 55px;
   font-weight: bold;
 }
-
-/* Search Container */
+ 
 .searc-container {
-  background-color: #da8e03;
+  background-color: #fa7101f1;
   border-radius: 0.5rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   text-align: center;
@@ -49,18 +47,20 @@ body {
 .searc-container h1{
   font-size: 2rem;
   margin-top: 60px;
+  text-decoration: underline;
   font-weight: bold;
   margin-bottom: 1.5rem;
   color: rgb(255, 255, 255);
 }
 .note-container h1 {
   font-size: 2rem;
+  text-decoration: underline;
   margin-top: 5px;
   font-weight: bold;
   margin-bottom: 1rem;
   color: rgb(255, 255, 255);
 }
-/* Note Text */
+ 
 .note-text {
   font-weight: bold;
   color: red;
@@ -69,8 +69,7 @@ body {
   text-decoration-style: solid;
   text-decoration-color: red;
 }
-
-/* Form Group */
+ 
 .form-group {
   margin-bottom: 0.5rem;
 }
@@ -83,12 +82,13 @@ body {
 
 .form-group select, .form-group input {
   width: 70%;
+  font-weight: bold;
+  color: block;
   padding: 0.5rem;
   border: 1px solid #ced4da;
   border-radius: 0.5rem;
 }
-
-/* Buttons */
+ 
 .btn {
   display: inline-block;
   padding: 0.5rem 0.5rem;
@@ -98,21 +98,21 @@ body {
 }
 
 .btn-primary {
-  background-color: #007bff;
+  background-color: #0038ee;
   color: white;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
+  background-color: #0038ee;
 }
 
 .btn-secondary {
-  background-color: #6c757d;
+  background-color:  #343a40;
   color: white;
 }
 
 .btn-secondary:hover {
-  background-color: #5a6268;
+  background-color:  #343a40;
 }
 
 .dow-container {
@@ -150,16 +150,7 @@ body {
 .dow-container .btn:hover {
   background-color: #0056b3;
 }
-
-/* Additional Button Styles */
-.btn-success {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-success:hover {
-  background-color: #218838;
-}
+  
 
 .btn-danger {
   background-color: #dc3545;
@@ -186,8 +177,7 @@ body {
   font-weight: bold;
   color: blue;
 }
-
-/* Main Content */
+ 
 .main-content {
   display: flex;
   flex-direction: column;
@@ -246,18 +236,16 @@ body {
     padding-right: 20px;
   }
 }
-
-/* Note Container */
+ 
 .note-container {
   position: fixed;
   top: 145px;
   right: 0;
-  height: 100%; /* Adjust height to fit within the remaining viewport */
+  height: 100%; 
   width: 200px;
-  background-color: #e79d47;
+  background-color: #fa7101f1;
   text-align: center;  
   z-index: 900;
- 
 }
 
  
